@@ -30,6 +30,7 @@
     :remItem = "removeItem" />
     <MainFooter />
     <SideBar v-if="showSideBar" :toggle="toggleSideBar" :cart="cart" :inventory="inventory" :remove="removeItem" />
+    <CheckoutForm v-if="showCheckout" :toggle="toggleCheckout" :cart="cart" :inventory="inventory" :remove="removeItem" />'
   </div>
 </template>
 
@@ -38,6 +39,7 @@ import SideBar from './components/SideBar.vue'
 import MainFooter from './components/MainFooter.vue'
 // import product from '@/products.json'
 import ProductDataService from '@/services/ProductDataService'
+import CheckoutForm from './components/CheckoutForm.vue'
 
 export default {
   mounted () {
@@ -54,17 +56,24 @@ export default {
       .catch(error => {
         console.error('Error fetching products:', error)
       })
+    // Charger le panier depuis le localStorage
+    const savedCart = localStorage.getItem('cart')
+    if (savedCart) {
+      this.cart = JSON.parse(savedCart)
+    }
   },
   data () {
     return {
       showSideBar: false,
+      showCheckout: false,
       inventory: [],
       cart: {}
     }
   },
   components: {
     SideBar,
-    MainFooter
+    MainFooter,
+    CheckoutForm
   },
   methods: {
     toggleSideBar () {
@@ -74,9 +83,13 @@ export default {
       if (!this.cart[product]) this.cart[product] = 0
       this.cart[product] += this.inventory[index].quantity
       console.log(this.cart[product])
+      // Sauvegarder le panier dans le localStorage
+      localStorage.setItem('cart', JSON.stringify(this.cart))
     },
     removeItem (name) {
       delete this.cart[name]
+      // Sauvegarder le panier dans le localStorage
+      localStorage.setItem('cart', JSON.stringify(this.cart))
     },
     addInventory (product) {
       this.inventory.push(product)

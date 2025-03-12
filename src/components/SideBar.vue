@@ -34,10 +34,9 @@
                     </tr>
                 </tbody>
             </table>
-              <p  v-if="!Object.keys(cart).length" class="text-center"><em>No items in cart</em></p>
-              <div class="flex justify-between mt-3">
+              <p  v-if="cart && !Object.keys(cart).length" class="text-center"><em>No items in cart</em></p> <div class="flex justify-between mt-3">
                 <span><strong>Total:</strong> ${{ calculateTotal() }}</span>
-                <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Checkout</button>
+                <router-link to="/checkout" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Checkout</router-link>
               </div>
           </div>
       </div>
